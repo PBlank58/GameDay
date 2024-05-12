@@ -33,7 +33,6 @@ struct QuarterSummaryView: View {
     // MARK: PDF properties
     @State var PDFURL: URL?
     @State var showPDFSheet: Bool = false
-    @State var notShowPDFSheet: Bool = true
     
     // csv export
     //clearances
