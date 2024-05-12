@@ -1,0 +1,89 @@
+func generateCSV() -> URL {
+                 var fileURL: URL!
+                 
+             
+        // heading of CSV file.
+        // game details
+        let csvgameDetails = "\(gameDetails.game[0].opponent)\n At \(gameDetails.game[0].venue)\n R\(gameDetails.game[0].round) \(gameDetails.game[0].gameDate.formatted(.dateTime.year()))\n ,,,,, \n"
+       
+        //quarter header
+                  let heading = "Quarter, First, Second, Third, Fourth, Total\n"
+       
+                    // blank row
+                    let blankRow = ",,,,, \n"
+                  
+                  // table row centre clearance ball
+                    let CentreClearanceUs = "Centre Clearance Us" + ","  + String(clearanceArray[0])  + ","  + String(clearanceArray[1])  + ","  + String(clearanceArray[2])  + ","  + String(clearanceArray[3])  + ","  + String(clearanceArray[0..<4].reduce(0,+)) + "\n"
+                  // table row centre clearance ball
+                    let CentreClearanceThem = "Centre Clearance Them" + ","  + String(clearanceArray[8])  + ","  + String(clearanceArray[9])  + ","  + String(clearanceArray[10])  + ","  + String(clearanceArray[11])  + ","  + String(clearanceArray[8..<12].reduce(0,+)) + "\n"
+                  
+                    let centreClearanceComma = "Centre Clearance" + "," + String(csvCentreCearanceArray[0]) + "," + String(csvCentreCearanceArray[1])  + "," +  String(csvCentreCearanceArray[2])  + "," +  String(csvCentreCearanceArray[3]) +  "," + String(csvCentreCearanceArray[0..<4].reduce(0,+)) + "\n"
+                  
+                  // table row other clearance ball
+                    let OtherClearanceUs = "Other Clearance Us" + ","  + String(clearanceArray[4])  + ","  + String(clearanceArray[5])  + ","  + String(clearanceArray[6])  + ","  + String(clearanceArray[7])  + ","  + String(clearanceArray[4..<8].reduce(0,+)) + "\n"
+                  // table row centre clearance ball
+                    let OtherClearanceThem = "Other Clearance Them" + ","  + String(clearanceArray[12])  + ","  + String(clearanceArray[13])  + ","  + String(clearanceArray[14])  + ","  + String(clearanceArray[15])  + ","  + String(clearanceArray[12..<15].reduce(0,+)) + "\n"
+                  
+                    let otherClearanceComma = "Other Clearance" + "," + String(csvOtherCearanceArray[0]) + "," + String(csvOtherCearanceArray[1])  + "," +  String(csvOtherCearanceArray[2])  + "," +  String(csvOtherCearanceArray[3]) +  "," + String(csvOtherCearanceArray[0..<4].reduce(0,+)) + "\n"
+                  
+                  // table row contested ball
+                    let contestedComma = "Contested Ball" + "," + String(csvContestedArray[0]) + "," + String(csvContestedArray[1])  + "," +  String(csvContestedArray[2])  + "," +  String(csvContestedArray[3]) +  "," + String(csvContestedArray[0..<4].reduce(0,+)) + "\n"
+                  // tackles
+                    let tacklesTotal = "Total Tackles" + "," + String(csvTotalTacklesArray[0]) + "," + String(csvTotalTacklesArray[1])  + "," +  String(csvTotalTacklesArray[2])  + "," +  String(csvTotalTacklesArray[3]) +  "," + String(csvTotalTacklesArray[0..<4].reduce(0,+)) + "\n"
+                    let tacklesInside40 = "Inside 40 Tackles" + "," + String(csvInside40TacklesArray[0]) + "," + String(csvInside40TacklesArray[1])  + "," +  String(csvInside40TacklesArray[2])  + "," +  String(csvInside40TacklesArray[3]) +  "," + String(csvInside40TacklesArray[0..<4].reduce(0,+)) + "\n"
+                  
+                  // HC Contested and Uncontested marks
+                    let HCContestedmarks = "Haileybury Contested Marks" + "," + "\(hcMarksArray[0] + hcMarksArray[8] + hcMarksArray[16])" + "," + "\(hcMarksArray[1] + hcMarksArray[9] + hcMarksArray[17])" + "," + "\(hcMarksArray[2] + hcMarksArray[10] + hcMarksArray[18])" + "," + "\(hcMarksArray[3] + hcMarksArray[11] + hcMarksArray[19])" + ","  + "\(hcMarksArray[0..<4].reduce(0,+) + hcMarksArray[8..<12].reduce(0,+) + hcMarksArray[16..<20].reduce(0,+))" + "\n"
+                  
+                  let HCUncontestedmarks = "Haileybury Uncontested Marks" + "," + "\(hcMarksArray[4] + hcMarksArray[12] + hcMarksArray[20])" + "," + "\(hcMarksArray[5] + hcMarksArray[13] + hcMarksArray[21])" + "," + "\(hcMarksArray[6] + hcMarksArray[14] + hcMarksArray[22])" + "," + "\(hcMarksArray[7] + hcMarksArray[15] + hcMarksArray[23])" + ","  + "\(hcMarksArray[4..<8].reduce(0,+) + hcMarksArray[12..<16].reduce(0,+) + hcMarksArray[20..<24].reduce(0,+))" + "\n"
+                  
+                  let HCMarks = "Haileybury Marks" + "," + "\(hcMarksArray[0] + hcMarksArray[8] + hcMarksArray[16] + hcMarksArray[4] + hcMarksArray[12] + hcMarksArray[20])" + "," + "\(hcMarksArray[1] + hcMarksArray[9] + hcMarksArray[17] + hcMarksArray[5] + hcMarksArray[13] + hcMarksArray[21])" + "," + "\(hcMarksArray[2] + hcMarksArray[10] + hcMarksArray[18] + hcMarksArray[6] + hcMarksArray[14] + hcMarksArray[22])" + "," + "\(hcMarksArray[3] + hcMarksArray[11] + hcMarksArray[19] + hcMarksArray[7] + hcMarksArray[15] + hcMarksArray[23])" + ","  + "\(hcMarksArray[0..<4].reduce(0,+) + hcMarksArray[8..<12].reduce(0,+) + hcMarksArray[16..<20].reduce(0,+) + hcMarksArray[4..<8].reduce(0,+) + hcMarksArray[12..<16].reduce(0,+) + hcMarksArray[20..<24].reduce(0,+))" + "\n"
+                  
+                  // OP Contested and Uncontested marks
+                  let OPContestedmarks = "Opposition Contested Marks" + "," + "\(opMarksArray[0] + opMarksArray[8] + opMarksArray[16])" + "," + "\(opMarksArray[1] + opMarksArray[9] + opMarksArray[17])" + "," + "\(opMarksArray[2] + opMarksArray[10] + opMarksArray[18])" + "," + "\(opMarksArray[3] + opMarksArray[11] + opMarksArray[19])" + ","  + "\(opMarksArray[0..<4].reduce(0,+) + opMarksArray[8..<12].reduce(0,+) + opMarksArray[16..<20].reduce(0,+))" + "\n"
+                  
+                  
+                  let OPUncontestedmarks = "Opposition Uncontested Marks" + "," + "\(opMarksArray[4] + opMarksArray[12] + opMarksArray[20])" + "," + "\(opMarksArray[5] + opMarksArray[13] + opMarksArray[21])" + "," + "\(opMarksArray[6] + opMarksArray[14] + opMarksArray[22])" + "," + "\(opMarksArray[7] + opMarksArray[15] + opMarksArray[23])" + ","  + "\(opMarksArray[4..<8].reduce(0,+) + opMarksArray[12..<16].reduce(0,+) + opMarksArray[20..<24].reduce(0,+))" + "\n"
+                  
+                  let OPMarks = "Opposition Marks" + "," + "\(opMarksArray[0] + opMarksArray[8] + opMarksArray[16] + opMarksArray[4] + opMarksArray[12] + opMarksArray[20])" + "," + "\(opMarksArray[1] + opMarksArray[9] + opMarksArray[17] + opMarksArray[5] + opMarksArray[13] + opMarksArray[21])" + "," + "\(opMarksArray[2] + opMarksArray[10] + opMarksArray[18] + opMarksArray[6] + opMarksArray[14] + opMarksArray[22])" + "," + "\(opMarksArray[3] + opMarksArray[11] + opMarksArray[19] + opMarksArray[7] + opMarksArray[15] + opMarksArray[23])" + ","  + "\(opMarksArray[0..<4].reduce(0,+) + opMarksArray[8..<12].reduce(0,+) + opMarksArray[16..<20].reduce(0,+) + opMarksArray[4..<8].reduce(0,+) + opMarksArray[12..<16].reduce(0,+) + opMarksArray[20..<24].reduce(0,+))" + "\n"
+                  
+                  // total marks
+                  let totalMarks = "Total Marks" + "," + String(totalMarksArray[0]) + "," + String(totalMarksArray[1]) + "," + String(totalMarksArray[2]) + "," + String(totalMarksArray[3]) + "," + String(totalMarksArray[0..<4].reduce(0,+))  + "\n"
+                  
+                  // inside 40s
+                  let  inside40Us = "Inside 40 Us" + "," + String(csvInside40UsArray[0]) + "," + String(csvInside40UsArray[1])  + "," +  String(csvInside40UsArray[2])  + "," +  String(csvInside40UsArray[3]) +  "," + String(csvInside40UsArray[0..<4].reduce(0,+)) + "\n"
+                  let  inside40UsShallow = "  - shallow" + "," + String(csvInside40UsShallowArray[0]) + "," + String(csvInside40UsShallowArray[1])  + "," +  String(csvInside40UsShallowArray[2])  + "," +  String(csvInside40UsShallowArray[3]) +  "," + String(csvInside40UsShallowArray[0..<4].reduce(0,+)) + "\n"
+                  let  inside40Them = "Inside 40 Them" + "," + String(csvInside40ThemArray[0]) + "," + String(csvInside40ThemArray[1])  + "," +  String(csvInside40ThemArray[2])  + "," +  String(csvInside40ThemArray[3]) +  "," + String(csvInside40ThemArray[0..<4].reduce(0,+)) + "\n"
+                  let  inside40Diff = "Inside 40 Difference" + "," + String( csvInside40DiffArray[0]) + "," + String( csvInside40DiffArray[1])  + "," +  String( csvInside40DiffArray[2])  + "," +  String( csvInside40DiffArray[3]) +  "," + String( csvInside40DiffArray[0..<4].reduce(0,+)) + "\n"
+                
+        // scoring details
+                let  HCScore = "Haileybury Score" + "," + "\(csvHCGoalArray[0]) - \(csvHCPointsArray[0])" + "," + "\(csvHCGoalArray[1]) - \(csvHCPointsArray[1])" + "," + "\(csvHCGoalArray[2]) - \(csvHCPointsArray[2])" + "," + "\(csvHCGoalArray[3]) - \(csvHCPointsArray[3])" + "," + "\(csvHCGoalArray[0..<4].reduce(0,+)) - \(csvHCPointsArray[0..<4].reduce(0,+))" + "\n"
+                  let HCScoreTotal = "Points For" + "," + "\(6 * csvHCGoalArray[0] + csvHCPointsArray[0])" + "," + "\(6 * csvHCGoalArray[1] +  csvHCPointsArray[1])" + "," + "\(6 * csvHCGoalArray[2] + csvHCPointsArray[2])" + "," + "\(6 * csvHCGoalArray[3] + csvHCPointsArray[3])" + "," + "\(6 * csvHCGoalArray[0..<4].reduce(0,+) + csvHCPointsArray[0..<4].reduce(0,+))"  + "\n"
+                  
+                  let  OpScore = "Opposition Score" + "," + "\(csvOpGoalArray[0]) - \(csvOpPointsArray[0])"  + "," + "\(csvOpGoalArray[1]) - \(csvOpPointsArray[1])" + "," + "\(csvOpGoalArray[2]) - \(csvOpPointsArray[2])" + "," + "\(csvOpGoalArray[3]) - \(csvOpPointsArray[3])" + "," + "\(csvOpGoalArray[0..<4].reduce(0,+)) - \(csvOpPointsArray[0..<4].reduce(0,+))" + "\n"
+                  
+                  let OpScoreTotal = "Points Against" + "," + "\(6 * csvOpGoalArray[0] + csvOpPointsArray[0])" + "," + "\(6 * csvOpGoalArray[1] +  csvOpPointsArray[1])" + "," + "\(6 * csvOpGoalArray[2] + csvOpPointsArray[2])" + "," + "\(6 * csvOpGoalArray[3] + csvOpPointsArray[3])" + "," + "\(6 * csvOpGoalArray[0..<4].reduce(0,+) + csvOpPointsArray[0..<4].reduce(0,+))"  + "\n"
+                  
+                  let  Difference = "Difference" + "," + String(   csvScoreDifferenceArray[0]) + "," + String(   csvScoreDifferenceArray[1])  + "," +  String(   csvScoreDifferenceArray[2])  + "," +  String(   csvScoreDifferenceArray[3]) +  "," + String(   csvScoreDifferenceArray[0..<4].reduce(0,+)) + "\n"
+                  
+                  // rows to string data
+                  let stringData = csvgameDetails + heading + blankRow + centreClearanceComma +  otherClearanceComma + contestedComma + tacklesTotal + tacklesInside40  +  totalMarks + inside40Us + inside40Them + inside40Diff + HCScoreTotal +  OpScoreTotal + Difference + blankRow + csvGKList
+                  
+                 do {
+                     
+                     let path = try FileManager.default.url(for: .documentDirectory,
+                                                            in: .allDomainsMask,
+                                                            appropriateFor: nil,
+                                                            create: false)
+                     
+                     fileURL = path.appendingPathComponent("QuarterSummary.csv")
+                     
+                     // append string data to file
+                     try stringData.write(to: fileURL, atomically: true , encoding: .utf8)
+                     print(fileURL!)
+                     
+                 } catch {
+                     print("error generating csv file")
+                 }
+                 return fileURL
+             }

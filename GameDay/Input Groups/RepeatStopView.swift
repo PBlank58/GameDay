@@ -1,0 +1,187 @@
+//
+//  RepeatStopView.swift
+//  GameDay
+//
+//  Created by Brett Pullyblank on 19/9/2023.
+//
+
+import SwiftUI
+
+struct RepeatStopView: View {
+ 
+    @StateObject var matchViewModel = MatchViewModel()
+   
+    
+    //Custom Colours
+    struct CustomGold {
+        static let HC_Gold = Color("HC_Gold")
+    }
+    struct CustomMag {
+        static let HC_Mag = Color("HC_Magenta")
+    }
+    
+  
+    @State var date = Date()
+    //add Subtract bool
+    @State var isAdd = true
+    @Binding var quarterInt: Int
+   
+    
+    // Covert string to array and back for AppStorage
+    @State private var repeatArray: [Int]  = [0,0,0,0,0,0,0,0]
+    @State private var repeatStringArray: [String] = []
+    @AppStorage("repeatS") var repeatS = ""
+   
+    
+   
+    var body: some View {
+        VStack {
+            HStack {
+                
+                Text("Rep Stop" )
+              
+                    .font(.subheadline)
+                    .bold()
+                Spacer()
+                //toggle to add or subtract
+                Button {
+                    isAdd.toggle()
+                       } label: {
+                           VStack {
+                               Image(systemName:  isAdd ? "plus" : "minus")
+    
+                           }
+                           .frame(width: 20, height: 20)
+                          
+                                       .foregroundColor(.white)
+                                       .background(
+                                           RoundedRectangle(
+                                               cornerRadius: 5,
+                                               style: .continuous
+                                           )
+                                           .fill(CustomMag.HC_Mag)
+                                           .opacity(0.6)
+                                       )
+                                       .overlay {
+
+                                           RoundedRectangle(
+                                               cornerRadius: 5,
+                                               style: .continuous
+                                           )
+                                           .stroke(.gray, lineWidth: 2)
+                                       }
+                               }
+                
+               
+            }
+           
+            VStack {
+               
+                HStack {
+                   
+                    Text("Ctre")
+                        .frame(width: 40,  height:35)
+                        .foregroundColor(CustomMag.HC_Mag)
+                    Text("Other")
+                        .frame(width: 40,  height:35)
+                }
+                .font(.subheadline)
+                
+                //button array
+                  VStack {
+                      // 1st Quarter
+                        if quarterInt == 1 || quarterInt == 5 {
+                        HStack {
+                          ButtonView(counter: $repeatArray[0], fColour: CustomMag.HC_Mag, bColour: Color.gray, Opac: 0.125, isAdd: $isAdd)
+                          ButtonView(counter: $repeatArray[4], fColour: Color.black, bColour: Color.yellow, Opac: 0.125, isAdd: $isAdd)
+                        }
+                    }
+                    else {
+                    }
+                    // 2nd Quarter
+                    if quarterInt == 2 || quarterInt == 5 {
+                      HStack {
+                          ButtonView(counter: $repeatArray[1], fColour: CustomMag.HC_Mag, bColour: Color.gray, Opac: 0.25, isAdd: $isAdd)
+                          ButtonView(counter: $repeatArray[5], fColour: Color.black, bColour: Color.yellow, Opac: 0.25, isAdd: $isAdd)
+                      }
+                  }
+                  else {
+                  }
+                    if quarterInt == 3 || quarterInt == 5 {
+                    // 3rd Quarter
+                    HStack {
+                          ButtonView(counter: $repeatArray[2], fColour: CustomMag.HC_Mag, bColour: Color.gray, Opac: 0.5, isAdd: $isAdd)
+                          ButtonView(counter: $repeatArray[6], fColour: Color.black, bColour: Color.yellow, Opac: 0.5, isAdd: $isAdd)
+                    }
+                }
+                else {
+                }
+                    if quarterInt == 4 || quarterInt == 5 {
+                    //4th Quarter
+                    HStack {
+                          ButtonView(counter: $repeatArray[3], fColour: CustomMag.HC_Mag, bColour: Color.gray, Opac: 0.625, isAdd: $isAdd)
+                          ButtonView(counter: $repeatArray[7], fColour: Color.black, bColour: Color.yellow, Opac: 0.625, isAdd: $isAdd)
+                    }
+                }
+                else {
+                }
+                    if quarterInt == 5 {
+                   // Totals
+                    HStack {
+                          Text("\(repeatArray[0..<4].reduce(0,+))")
+                              .font(.caption)
+                              .foregroundColor(CustomMag.HC_Mag.opacity(0.5))
+                              .padding(.all)
+                              .frame(width:50 , height:35)
+                          
+                           Text("\(repeatArray[4..<8].reduce(0,+))")
+                               .font(.caption)
+                               .foregroundColor(CustomMag.HC_Mag.opacity(0.5))
+                           
+                               .padding(.all)
+                               .frame(width:40 , height:35)
+                    }
+                }
+                else {
+                }
+                       
+                  }
+              }
+          
+          }
+          .padding()
+          
+              .border(CustomMag.HC_Mag)
+              .padding()
+      
+              .onDisappear() {
+                  updateContested()
+              }
+             .onAppear() {
+                 updateContestedArray()
+             }
+      }
+// convert integer array into string to save in AppStorage
+func updateContested() {
+    
+    repeatStringArray = repeatArray.map{String($0)}
+    repeatS = repeatStringArray.joined(separator: ",")
+     
+ 
+}
+// convert AppStorage string into integer array and update Array
+func updateContestedArray() {
+  if repeatS == "" {
+      repeatS = "0,0,0,0,0,0,0,0"
+      repeatArray  = [0,0,0,0,0,0,0,0]
+  } else {
+      repeatArray = repeatS.components(separatedBy: ",").map { Int($0) ?? 0 }
+        }
+    }
+  }
+
+struct RepeatStopView_Previews: PreviewProvider {
+    static var previews: some View {
+        RepeatStopView(quarterInt: .constant(1))
+    }
+}
